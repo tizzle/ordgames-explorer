@@ -9,7 +9,7 @@ const Header = () => {
         <div className="flex items-center justify-between mx-auto">
           <div className="flex items-center navLink">
             <Link to="/" className="flex items-center mr-10">
-              <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+              <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-secondary-100">
                 ORDGAMES
               </span>
             </Link>
@@ -19,7 +19,7 @@ const Header = () => {
               <li className="px-[18px]">
                 <Link
                   to="/"
-                  className="text-sm font-normal text-gray-900 rounded dark:text-white hover:text-primary-500 dark:hover:text-primary-500"
+                  className="text-sm font-normal text-gray-900 rounded dark:text-secondary-100 hover:text-primary-500 dark:hover:text-primary-500"
                 >
                   Games
                 </Link>
@@ -27,7 +27,7 @@ const Header = () => {
               <li className="px-[18px]">
                 <Link
                   to="/about"
-                  className="text-sm font-normal text-gray-900 rounded dark:text-white hover:text-primary-500 dark:hover:text-primary-500"
+                  className="text-sm font-normal text-gray-900 rounded dark:text-secondary-100 hover:text-primary-500 dark:hover:text-primary-500"
                 >
                   About
                 </Link>

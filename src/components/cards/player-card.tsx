@@ -8,8 +8,8 @@ export interface PlayerCardProps {
 
 const PlayerCard = ({ playerClass, supply }: PlayerCardProps) => {
   return (
-    <div className="flex flex-col p-4 space-y-2 bg-white rounded-lg">
-      <h3 className="flex-grow text-base font-medium">
+    <div className="flex flex-col p-4 space-y-2 bg-white rounded-lg dark:bg-secondary-900">
+      <h3 className="flex-grow text-base font-medium text-secondary-900 dark:text-secondary-100">
         {capitalizeFirstLetter(playerClass)}
       </h3>
       <p className="flex items-end">

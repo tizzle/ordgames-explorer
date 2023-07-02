@@ -10,10 +10,11 @@ const TabButton = ({ title }: TabButtonProps) => {
     <Tab
       className={({ selected }) =>
         twMerge(
-          "w-full text-base font-bold text-secondary-900 border-b-2 border-b-secondary-200 py-4 bg-white",
+          "w-full text-base font-bold text-secondary-900 dark:text-secondary-100 border-b-2 border-b-secondary-200 dark:border-b-secondary-700 py-4 bg-white dark:bg-secondary-900",
           "focus:outline-none",
-          selected && "border-b-2 border-b-primary-500 text-primary-500",
-          !selected && "hover:text-secondary-800"
+          selected &&
+            "border-b-2 border-b-primary-500 text-primary-500 dark:text-primary-500 dark:border-b-primary-500",
+          !selected && "hover:text-secondary-800 dark:hover:text-secondary-300"
         )
       }
     >

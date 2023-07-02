@@ -7,6 +7,10 @@ html {
   height: -webkit-fill-available;
 }
 
+body, #root {
+  @apply min-h-screen;
+}
+
 .container-xs {
   @apply w-full max-w-xs px-6 mx-auto md:px-12;
 }

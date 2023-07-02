@@ -12,7 +12,7 @@ const GamesCard = ({ title, image, id }: GamesCardProps) => {
   return (
     <Link
       to={`games/${id}`}
-      className="relative p-2 transition-all bg-white border border-gray-300 shadow-outline rounded-xl group dark:bg-dark dark:border-gray-800 hover:shadow-hover hover:border-primary-500"
+      className="relative p-2 transition-all bg-white border border-gray-300 shadow-outline dark:bg-secondary-800 rounded-xl group dark:bg-dark dark:border-gray-800 hover:shadow-hover hover:border-primary-500"
     >
       <img
         src={image}
@@ -20,13 +20,13 @@ const GamesCard = ({ title, image, id }: GamesCardProps) => {
         alt=""
       />
       <div className="px-2 pt-3 pb-2">
-        <h3 className="text-lg font-medium text-gray-900 transition-all group-hover:text-primary-500 dark:text-white">
+        <h3 className="text-lg font-medium text-gray-900 transition-all group-hover:text-primary-500 dark:text-secondary-100">
           {title}
         </h3>
         {/* <div>
           <small className="flex items-center mb-1 text-gray-700 dark:text-gray-400">
             Price
-            <span className="font-medium text-gray-900 dark:text-white">
+            <span className="font-medium text-gray-900 dark:text-secondary-100">
               12.777
             </span>
           </small>
@@ -34,7 +34,7 @@ const GamesCard = ({ title, image, id }: GamesCardProps) => {
             <small className="flex items-center text-gray-700 dark:text-gray-400">
               {" "}
               Offer for{" "}
-              <span className="text-gray-900 dark:text-white">10.777</span>
+              <span className="text-gray-900 dark:text-secondary-100">10.777</span>
             </small>
             <small className="text-gray-700 dark:text-gray-400">
               {" "}
