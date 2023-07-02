@@ -24,7 +24,7 @@ const LootCard = ({ lootClass, lootObject, power, supply }: LootCardProps) => {
       </p>
       <p className="flex items-end">
         <span className="block w-full text-xs font-medium leading-none tracking-widest uppercase text-secondary-500">
-          Supply
+          Remaining
         </span>
         <span
           className={twMerge(
