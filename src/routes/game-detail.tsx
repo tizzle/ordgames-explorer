@@ -19,13 +19,15 @@ export type GamesDetailData = {
   };
 };
 
+export type LootByCategory = {
+  [key: string]: LootItem[];
+};
+
 const GameDetailPage = () => {
   const { result } = useLoaderData() as GamesDetailData;
 
-  // console.log(result);
-
-  const lootByCategory = React.useMemo<{ [key: string]: LootItem[] }>(() => {
-    return result.loot.reduce((acc, l) => {
+  const lootByCategory: LootByCategory = React.useMemo(() => {
+    return result.loot.reduce<LootByCategory>((acc, l) => {
       if (!Array.isArray(acc[l[0]])) {
         acc[l[0]] = [l];
       } else {
