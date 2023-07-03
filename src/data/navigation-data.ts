@@ -25,6 +25,10 @@ const navigationData: NavigationData = [
         label: "Check Player",
         target: "/tools/checkPlayer",
       },
+      {
+        label: "Check Position",
+        target: "/tools/checkPosition",
+      },
     ],
   },
   {

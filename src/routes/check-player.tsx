@@ -5,7 +5,7 @@ import Button from "../components/atoms/button";
 import { emitPromise } from "../socket";
 
 export type PlayerData = {
-  inscriptionNumber: string;
+  inscriptionId: string;
   isValid: boolean;
 };
 
@@ -31,9 +31,7 @@ const CheckPlayerPage = () => {
       if (event.target.value === "" || !event.target.value) {
         switch (event.target.name) {
           case "inscription-id":
-            event.target.setCustomValidity(
-              "Please enter an inscription number."
-            );
+            event.target.setCustomValidity("Please enter an inscription id.");
             break;
         }
       } else {
@@ -54,7 +52,7 @@ const CheckPlayerPage = () => {
       });
 
       setPlayerData({
-        inscriptionNumber: fieldValues["inscription-id"] as string,
+        inscriptionId: fieldValues["inscription-id"] as string,
         isValid: data.result as boolean,
       });
     },
@@ -83,7 +81,7 @@ const CheckPlayerPage = () => {
               type="text"
               placeholder="Inscription Id"
               required={true}
-              className="rounded"
+              className="flex-grow rounded"
               onBlur={handleInputBlur}
               onChange={handleInputChange}
             />
@@ -113,7 +111,7 @@ const CheckPlayerPage = () => {
             )}
             <p>
               {"The player with the inscription id "}
-              <b>{playerData.inscriptionNumber}</b>
+              <b>{playerData.inscriptionId}</b>
               {" is "}
               {playerData.isValid ? "a valid player." : "not a valid player."}
             </p>
@@ -170,4 +168,278 @@ trac.on('response', (response) => {
     console.log(response.result);
   }
 }); 
+*/
+
+/*
+
+
+            window.trac = io("https://ordgames.trac.network", {
+                autoConnect : true,
+                reconnection: true,
+                reconnectionDelay: 500,
+                econnectionDelayMax : 500,
+                randomizationFactor : 0
+            });
+
+            window.trac.connect();
+
+            window.trac.on('response', async function(msg){
+
+                console.log(msg);
+
+                switch(msg.func)
+                {
+                    case 'isValidPlayer':
+
+                        if(msg.result === false)
+                        {
+                            document.getElementById('validplayer_result').innerHTML = 'Not a valid player';
+                            return;
+                        }
+
+                        document.getElementById('validplayer_result').innerHTML = 'Valid player';
+
+                        break;
+
+                    case 'gameStats':
+
+                        if(msg.result === null)
+                        {
+                            document.getElementById('gamestats_result').innerHTML = 'Game not found';
+                            return;
+                        }
+
+                        document.getElementById('gamestats_result').innerHTML = '<pre>' + JSON.stringify(msg.result, null, 4) + '</pre>';
+
+                        break;
+
+                    case 'inscribedBytes':
+
+                        if(msg.result === null)
+                        {
+                            document.getElementById('list_inscribed_result').innerHTML = 'Nothing found';
+                            return;
+                        }
+
+                        let out = '';
+
+                        for(let i = 0; i < msg.result.length; i++)
+                        {
+                            out += '<div>Number: ' + msg.result[i].number + ' | ID : ' + msg.result[i].id + '</div>';
+                        }
+
+                        if(out == '')
+                        {
+                            out = 'Nothing found';
+                        }
+                        else
+                        {
+                            out = '<div style="max-height: 500px; overflow-x: auto;">' + out + '</div>';
+                        }
+
+                        document.getElementById('list_inscribed_result').innerHTML = out;
+
+                        break;
+
+                    case 'bytesInscribedLength':
+
+                        if(msg.result === null)
+                        {
+                            document.getElementById('num_inscribed_result').innerHTML = 'Ordinal not found';
+                            return;
+                        }
+
+                        document.getElementById('num_inscribed_result').innerHTML = 'The content has been inscribed ' + msg.result + ' times';
+
+                        break;
+
+                    case 'inscribedPosition':
+
+                        if(msg.result === null)
+                        {
+                            document.getElementById('position_result').innerHTML = 'Ordinal not found';
+                            return;
+                        }
+
+                        document.getElementById('position_result').innerHTML = 'Inscription position #' + ( msg.result + 1 );
+
+                        break;
+
+                    case 'ordinal':
+
+                        if(msg.result === null)
+                        {
+                            document.getElementById('number_result').innerHTML = 'Ordinal not found';
+                            return;
+                        }
+
+                        if(msg.result.content_type.startsWith('image'))
+                        {
+                            document.getElementById('number_result').innerHTML =
+                                '<div><img style="max-width: 300px;" src="data:'+msg.result.content_type+';base64,'+msg.result.content+'"></div>';
+                        }
+                        else if(msg.result.content_type.startsWith('text/plain'))
+                        {
+                            document.getElementById('number_result').innerText =
+                                decodeURIComponent(escape(atob(msg.result.content)));
+                        }
+                        else
+                        {
+                            document.getElementById('number_result').innerText = '';
+                        }
+
+                        document.getElementById('number_result').innerHTML +=
+                            '<p style="font-size: 16px;"><a style="font-size: 16px;" href="https://ordinals.com/inscription/'+msg.result.id+'" target="_blank">OrdinalsExplorer</a></p>' +
+                            '<p style="font-size: 16px;">Content Hash:</p>' +
+                            '<p style="font-size: 12px;">'+msg.result.hash+'</p>';
+
+                        break;
+
+                    case 'wallet':
+
+                        if(msg.result === null)
+                        {
+                            document.getElementById('wallet_result').innerHTML = 'No inscriptions not found';
+                            return;
+                        }
+
+                        let wallet_out = '';
+
+                        for(let i = 0; i < msg.result.length; i++)
+                        {
+
+                            wallet_out += '<div style="margin-bottom: 10px;">#' + msg.result[i].number + '</div>';
+
+                            if(msg.result[i].content_type.startsWith('image'))
+                            {
+                                wallet_out += '<div><img style="max-width: 300px;" src="data:' + msg.result[i].content_type + ';base64,' + msg.result[i].content + '"></div>';
+                            }
+                            else if(msg.result[i].content_type.startsWith('text/plain'))
+                            {
+                                wallet_out += decodeURIComponent(escape(atob(msg.result[i].content)));
+                            }
+
+                            wallet_out += '<p style="font-size: 16px;"><a style="font-size: 16px;" href="https://ordinals.com/inscription/'+msg.result[i].id+'" target="_blank">OrdinalsExplorer</a></p>' +
+                                '<p style="font-size: 16px;">Content Hash:</p>' +
+                                '<p style="font-size: 12px;">'+msg.result[i].hash+'</p>';
+
+                            wallet_out += '<hr/>';
+                        }
+
+                        document.getElementById('wallet_result').innerHTML = '<div style="max-height: 500px; overflow-x: auto;">' + wallet_out + '</div>';
+
+
+                        break;
+
+                    default:
+                        document.getElementById('number_result').innerHTML = 'Unexpected result. Please try again.';
+                }
+            });
+
+            window.trac.on('error', async function(msg){
+
+                console.log(msg);
+
+                switch(msg.func)
+                {
+                    case 'ordinal':
+                        document.getElementById('number_result').innerHTML = 'There has been an error with your request.';
+                        break;
+                }
+            });
+
+            async function getOrdinal(number)
+            {
+                number = number.trim();
+
+                if(isNaN(parseInt(number)))
+                {
+                    if(!number.endsWith('i0'))
+                    {
+                        alert('Please enter a valid inscription number or id.');
+                        return;
+                    }
+                }
+
+                document.getElementById('number_result').innerHTML = 'Please wait...';
+
+                window.trac.emit('get',
+                {
+                    func : 'ordinal',
+                    args : [number],
+                    call_id : ''
+                });
+            }
+
+            async function getWallet(address)
+            {
+                if((''+address).trim() == '')
+                {
+                    alert('Please enter a wallet address');
+                    return;
+                }
+
+                document.getElementById('wallet_result').innerHTML = 'Please wait...';
+
+                window.trac.emit('get',
+                    {
+                        func : 'wallet',
+                        args : [(''+address).trim()],
+                        call_id : ''
+                    });
+            }
+
+            async function getNumInscribed(number)
+            {
+                number = number.trim();
+
+                if(isNaN(parseInt(number)))
+                {
+                    if(!number.endsWith('i0'))
+                    {
+                        alert('Please enter a valid inscription number or id.');
+                        return;
+                    }
+                }
+
+                document.getElementById('num_inscribed_result').innerHTML = 'Please wait...';
+
+                window.trac.emit('get',
+                    {
+                        func : 'bytesInscribedLength',
+                        args : [number],
+                        call_id : ''
+                    });
+            }
+
+            async function getListInscribed(id_or_hash)
+            {
+                id_or_hash = id_or_hash.trim();
+
+                if(id_or_hash == '')
+                {
+                    if(!id_or_hash.endsWith('i0'))
+                    {
+                        alert('Please enter a valid inscription id or sha256 hash.');
+                        return;
+                    }
+                }
+
+                document.getElementById('num_inscribed_result').innerHTML = 'Please wait...';
+
+                window.trac.emit('get',
+                    {
+                        func : 'inscribedBytes',
+                        args : [id_or_hash, 0, 0],
+                        call_id : ''
+                    });
+            }
+
+            async function getInscribedPosition(number_or_id)
+            {
+                number_or_id = number_or_id.trim();
+
+                if(isNaN(parseInt(number_or_id)))
+                {…
+
 */

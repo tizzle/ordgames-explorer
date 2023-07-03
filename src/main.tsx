@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/foundation/layout.tsx";
 import AboutPage from "./routes/about.tsx";
 import CheckPlayerPage from "./routes/check-player.tsx";
+import CheckPositionPage from "./routes/check-position.tsx";
 import ErrorPage from "./routes/error.tsx";
 import GameDetailPage from "./routes/game-detail.tsx";
 import HomePage from "./routes/home.tsx";
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/tools/checkPlayer",
         element: <CheckPlayerPage />,
+      },
+      {
+        path: "/tools/checkPosition",
+        element: <CheckPositionPage />,
       },
     ],
   },
