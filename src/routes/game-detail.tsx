@@ -45,7 +45,7 @@ const GameDetailPage = () => {
 
       <section className="py-16 container-7xl">
         <div className="overflow-hidden border bg-secondary-100 dark:bg-secondary-800 rounded-xl border-secondary-200 dark:border-secondary-700">
-          <Tab.Group>
+          <Tab.Group defaultIndex={1}>
             <Tab.List className="flex">
               <TabButton title="Players" />
               <TabButton title="Loot" />
