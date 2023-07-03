@@ -1,4 +1,4 @@
-import ordjakImage from "../assets/ordjak-game-cover.jpeg";
+import ordjakImage from "../assets/ordjak-game-cover.webp";
 import wizordsImage from "../assets/wizords-game-cover.webp";
 
 export type GameData = {

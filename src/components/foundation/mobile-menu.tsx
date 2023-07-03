@@ -11,7 +11,7 @@ export interface MobileMenuProps {
 }
 
 const MobileMenu = ({ navigationData }: MobileMenuProps) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const closeMobileMenu = React.useCallback(() => {
     setMobileMenuOpen(false);

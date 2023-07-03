@@ -18,6 +18,16 @@ const navigationData: NavigationData = [
     })),
   },
   {
+    label: "Tools",
+    target: "",
+    children: [
+      {
+        label: "Check Player",
+        target: "/tools/checkPlayer",
+      },
+    ],
+  },
+  {
     label: "About",
     target: "/about",
   },

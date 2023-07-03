@@ -43,7 +43,7 @@ const NavigationLinkMenu = ({
           >
             <Menu.Items
               className={twMerge(
-                "absolute right-0 w-24 bg-white divide-y rounded-md shadow-lg divide-secondary-100 ring-1 ring-black ring-opacity-5 focus:outline-none",
+                "absolute right-0 w-32 bg-white divide-y rounded-md shadow-lg divide-secondary-100 ring-1 ring-black ring-opacity-5 focus:outline-none",
                 direction === "to-bottom" && "mt-2 origin-top-right",
                 direction === "to-top" && "mb-2 origin-bottom-right bottom-6"
               )}

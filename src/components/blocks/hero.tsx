@@ -1,4 +1,4 @@
-import heroImage from "../../assets/ord-games-header.png";
+import heroImage from "../../assets/ord-games-header.webp";
 import Link from "../atoms/link";
 
 const Hero = () => {

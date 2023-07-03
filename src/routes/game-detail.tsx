@@ -48,31 +48,33 @@ const GameDetailPage = () => {
     <main>
       {/* <section className="container-7xl">Game Detail page</section> */}
 
-      <section className="py-8 space-y-8 container-7xl">
+      <section className="flex flex-col flex-grow py-8 space-y-8 container-7xl">
         {gameMetadata && (
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-12">
             <div className="col-span-2 sm:col-span-1">
               <img src={gameMetadata?.image} className=" rounded-xl" />
             </div>
-            <div className="flex flex-col justify-center w-full col-span-2 space-y-4 sm:col-span-1">
-              <h1 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
+            <div className="flex flex-col justify-center w-full col-span-2 space-y-8 sm:col-span-1">
+              <h1 className="text-4xl font-bold text-secondary-900 dark:text-secondary-100">
                 {gameMetadata.title}
               </h1>
-              <div className="flex justify-center">
-                <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
-                  Player Classes
-                </p>
-                <p className="w-1/2 font-bold leading-none text-secondary-900 dark:text-secondary-100">
-                  {result.players.length}
-                </p>
-              </div>
-              <div className="flex justify-center">
-                <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
-                  Loot Classes
-                </p>
-                <p className="w-1/2 font-bold leading-none text-secondary-900 dark:text-secondary-100">
-                  {result.loot.length}
-                </p>
+              <div className="space-y-4">
+                <div className="flex justify-center">
+                  <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
+                    Player Classes
+                  </p>
+                  <p className="w-1/2 font-bold leading-none text-secondary-900 dark:text-secondary-100">
+                    {result.players.length}
+                  </p>
+                </div>
+                <div className="flex justify-center">
+                  <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
+                    Loot Classes
+                  </p>
+                  <p className="w-1/2 font-bold leading-none text-secondary-900 dark:text-secondary-100">
+                    {result.loot.length}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

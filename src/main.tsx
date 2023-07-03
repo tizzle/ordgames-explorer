@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/foundation/layout.tsx";
 import AboutPage from "./routes/about.tsx";
+import CheckPlayerPage from "./routes/check-player.tsx";
 import ErrorPage from "./routes/error.tsx";
 import GameDetailPage from "./routes/game-detail.tsx";
 import HomePage from "./routes/home.tsx";
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
           }
           return null;
         },
+      },
+      {
+        path: "/tools/checkPlayer",
+        element: <CheckPlayerPage />,
       },
     ],
   },

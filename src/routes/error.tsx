@@ -10,7 +10,7 @@ export default function ErrorPage() {
   console.error(error);
 
   return (
-    <main className="flex flex-col items-center justify-center container-7xl">
+    <main className="flex flex-col items-center justify-center flex-grow container-7xl">
       <section className="flex flex-col items-center justify-center space-y-8">
         <h1 className="text-3xl font-bold text-secondary-900">Oops!</h1>
         <p className="text-secondary-900">
