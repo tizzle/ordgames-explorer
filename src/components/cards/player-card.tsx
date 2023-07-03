@@ -13,12 +13,12 @@ const PlayerCard = ({ playerClass, supply }: PlayerCardProps) => {
         {capitalizeFirstLetter(playerClass)}
       </h3>
       <p className="flex items-end">
-        <span className="block w-full text-xs font-medium leading-none tracking-widest uppercase text-secondary-500">
-          Supply
+        <span className="flex-grow block font-medium leading-none tracking-widest uppercase truncate text-2xs text-secondary-500">
+          Remaining
         </span>
         <span
           className={twMerge(
-            "block w-full font-medium leading-none text-right",
+            "block font-medium leading-none text-right",
             supply === 0 && "text-red-500",
             supply <= 100 && "text-orange-500",
             supply >= 100 && "text-green-500"

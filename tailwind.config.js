@@ -10,6 +10,10 @@ export default {
         primary: colors.amber,
         secondary: colors.slate,
       },
+      fontSize: {
+        "3xs": ["0.5rem", "0.75rem"],
+        "2xs": ["0.75rem", "0.875rem"],
+      },
     },
   },
   plugins: [typography],

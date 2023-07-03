@@ -15,20 +15,20 @@ const LootCard = ({ lootClass, lootObject, power, supply }: LootCardProps) => {
         {capitalizeFirstLetter(lootClass)} — {capitalizeFirstLetter(lootObject)}
       </h3>
       <p className="flex items-end">
-        <span className="block w-full text-xs font-medium leading-none tracking-widest uppercase text-secondary-500">
+        <span className="flex-grow block font-medium leading-none tracking-widest uppercase truncate text-2xs text-secondary-500">
           Power
         </span>
-        <span className="block w-full font-medium leading-none text-right text-secondary-900 dark:text-secondary-100">
+        <span className="block font-medium leading-none text-right text-secondary-900 dark:text-secondary-100">
           {power}
         </span>
       </p>
       <p className="flex items-end">
-        <span className="block w-full text-xs font-medium leading-none tracking-widest uppercase text-secondary-500">
+        <span className="flex-grow block font-medium leading-none tracking-widest uppercase truncate text-2xs text-secondary-500">
           Remaining
         </span>
         <span
           className={twMerge(
-            "block w-full font-medium leading-none text-right",
+            "block font-medium leading-none text-right",
             supply === 0 && "text-red-500",
             supply <= 100 && "text-orange-500",
             supply >= 100 && "text-green-500"
