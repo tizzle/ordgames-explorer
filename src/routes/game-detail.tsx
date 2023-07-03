@@ -56,10 +56,10 @@ const GameDetailPage = () => {
                   <PlayerCard key={p[0]} playerClass={p[0]} supply={p[1]} />
                 ))}
               </Tab.Panel>
-              <Tab.Panel className="grid grid-cols-6 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              <Tab.Panel className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {Object.keys(lootByCategory).map((lootKey) => (
                   <React.Fragment key={lootKey}>
-                    <div className="col-span-12 pt-4 font-medium tracking-widest text-center uppercase sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 text-secondary-500">
+                    <div className="col-span-2 pt-4 font-medium tracking-widest text-center uppercase sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 text-secondary-500">
                       {lootKey}
                     </div>
                     {lootByCategory[lootKey].map((l) => (
