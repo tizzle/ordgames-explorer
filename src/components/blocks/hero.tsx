@@ -3,7 +3,7 @@ import Link from "../atoms/link";
 
 const Hero = () => {
   return (
-    <div className="py-16 mx-auto container-7xl">
+    <div className="mx-auto container-7xl">
       <div className="max-w-screen-md mx-auto space-y-8 text-center">
         <h2 className="overflow-hidden text-2xl font-semibold rounded-xl text-secondary-900 md:text-6xl dark:text-secondary-100">
           <img src={heroImage} alt="Ord Games" />

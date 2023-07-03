@@ -1,6 +1,7 @@
-import { HiBars3 } from "react-icons/hi2";
 import { Link } from "react-router-dom";
-import ConnectionState from "./connection-state";
+import navigationData from "../../data/navigation-data";
+import NavigationLinkMenu from "../atoms/nav-link-menu";
+import MobileMenu from "./mobile-menu";
 
 const Header = () => {
   return (
@@ -9,43 +10,25 @@ const Header = () => {
         <div className="flex items-center justify-between mx-auto">
           <div className="flex items-center navLink">
             <Link to="/" className="flex items-center mr-10">
-              <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-secondary-100">
+              <span className="self-center text-lg font-bold whitespace-nowrap dark:text-secondary-100">
                 ORDGAMES
               </span>
             </Link>
           </div>
-          <div className="items-center justify-between hidden w-full lg:flex lg:w-auto">
-            <ul className="flex flex-row items-center transition-all duration-200 bg-transparent">
-              <li className="px-[18px]">
-                <Link
-                  to="/"
-                  className="text-sm font-normal text-gray-900 rounded dark:text-secondary-100 hover:text-primary-500 dark:hover:text-primary-500"
-                >
-                  Games
-                </Link>
-              </li>
-              <li className="px-[18px]">
-                <Link
-                  to="/about"
-                  className="text-sm font-normal text-gray-900 rounded dark:text-secondary-100 hover:text-primary-500 dark:hover:text-primary-500"
-                >
-                  About
-                </Link>
-              </li>
+          <div className="items-center justify-between hidden w-full md:flex md:w-auto">
+            <ul className="flex flex-row items-center space-x-8 transition-all duration-200 bg-transparent">
+              {navigationData.map((navLink) => (
+                <NavigationLinkMenu
+                  key={navLink.label}
+                  label={navLink.label}
+                  target={navLink.target}
+                  children={navLink.children}
+                />
+              ))}
             </ul>
           </div>
-          <div className="flex items-center">
-            <ul className="flex items-center">
-              <li>
-                <ConnectionState />
-              </li>
-            </ul>
-            <button
-              data-target-drawer="mobile-navbar"
-              className="flex items-center p-2 text-sm text-gray-500 rounded-lg drawer-handler lg:hidden"
-            >
-              <HiBars3 />
-            </button>
+          <div className="flex items-center md:hidden">
+            <MobileMenu navigationData={navigationData} />
           </div>
         </div>
       </nav>

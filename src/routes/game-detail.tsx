@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import TabButton from "../components/atoms/tab-button";
 import LootCard from "../components/cards/loot-card";
 import PlayerCard from "../components/cards/player-card";
+import gameData from "../data/game-data";
 
 export type PlayerItem = [string, number];
 export type LootItem = [string, string, number, number];
@@ -24,7 +25,11 @@ export type LootByCategory = {
 };
 
 const GameDetailPage = () => {
-  const { result } = useLoaderData() as GamesDetailData;
+  const { result, args } = useLoaderData() as GamesDetailData;
+
+  const gameMetadata = gameData.find((g) => g.id === args[0]);
+
+  // console.log("gameMetadata", gameMetadata);
 
   const lootByCategory: LootByCategory = React.useMemo(() => {
     return result.loot.reduce<LootByCategory>((acc, l) => {
@@ -43,7 +48,34 @@ const GameDetailPage = () => {
     <main>
       {/* <section className="container-7xl">Game Detail page</section> */}
 
-      <section className="py-16 container-7xl">
+      <section className="py-8 space-y-8 container-7xl">
+        {gameMetadata && (
+          <div className="grid grid-cols-2 gap-6">
+            <div className="col-span-2 sm:col-span-1">
+              <img src={gameMetadata?.image} className=" rounded-xl" />
+            </div>
+            <div className="flex flex-col justify-center w-full col-span-2 space-y-4 sm:col-span-1">
+              <h1 className="text-2xl font-bold">{gameMetadata.title}</h1>
+              <div className="flex justify-center">
+                <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
+                  Player Classes
+                </p>
+                <p className="w-1/2 font-bold leading-none">
+                  {result.players.length}
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
+                  Loot Classes
+                </p>
+                <p className="w-1/2 font-bold leading-none">
+                  {result.loot.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="overflow-hidden border bg-secondary-100 dark:bg-secondary-800 rounded-xl border-secondary-200 dark:border-secondary-700">
           <Tab.Group defaultIndex={1}>
             <Tab.List className="flex">

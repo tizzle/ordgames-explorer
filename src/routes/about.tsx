@@ -1,7 +1,7 @@
 const AboutPage = () => {
   return (
     <main>
-      <section className="py-16 prose container-7xl dark:prose-invert">
+      <section className="py-8 prose container-7xl dark:prose-invert">
         <h1>About Ord Games</h1>
         <h2>About</h2>
         <p>
