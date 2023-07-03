@@ -54,7 +54,7 @@ const NavigationLinkMenu = ({
                     <Link
                       to={ni.target}
                       className={twMerge(
-                        "flex items-center w-full px-2 py-2 text-sm rounded-md hover:bg-secondary-100 disabled:opacity-50 disabled:pointer-events-none"
+                        "flex items-center w-full px-2 py-2 text-sm rounded-md hover:bg-secondary-200 disabled:opacity-50 disabled:pointer-events-none"
                       )}
                     >
                       {ni.label}
