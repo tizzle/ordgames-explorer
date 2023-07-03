@@ -36,10 +36,13 @@ const MobileMenu = ({ navigationData }: MobileMenuProps) => {
         onClose={closeMobileMenu}
         className="relative z-50"
       >
-        <div className="fixed inset-0 overflow-y-auto bg-white">
+        <div className="fixed inset-0 overflow-y-auto bg-white dark:bg-secondary-900">
           <Dialog.Panel className="flex flex-col w-full h-full px-6 py-5 mx-auto">
             <div className="flex items-center justify-start w-full">
-              <Link to="/" className="flex-grow text-lg font-bold uppercase">
+              <Link
+                to="/"
+                className="flex-grow text-lg font-bold uppercase text-secondary-900 dark:text-secondary-100"
+              >
                 Ordgames
               </Link>
               <Button

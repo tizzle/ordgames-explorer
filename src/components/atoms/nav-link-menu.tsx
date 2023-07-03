@@ -25,7 +25,7 @@ const NavigationLinkMenu = ({
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="flex items-center justify-center h-8 space-x-1 text-sm font-normal text-gray-900">
+            <Menu.Button className="flex items-center justify-center h-8 space-x-1 text-sm font-normal ttext-gray-900 dark:text-secondary-100">
               <span>{label}</span>
               <HiChevronDown
                 className={twMerge("w-4 h-4", open && "rotate-180")}

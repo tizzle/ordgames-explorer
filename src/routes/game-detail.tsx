@@ -55,12 +55,14 @@ const GameDetailPage = () => {
               <img src={gameMetadata?.image} className=" rounded-xl" />
             </div>
             <div className="flex flex-col justify-center w-full col-span-2 space-y-4 sm:col-span-1">
-              <h1 className="text-2xl font-bold">{gameMetadata.title}</h1>
+              <h1 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
+                {gameMetadata.title}
+              </h1>
               <div className="flex justify-center">
                 <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
                   Player Classes
                 </p>
-                <p className="w-1/2 font-bold leading-none">
+                <p className="w-1/2 font-bold leading-none text-secondary-900 dark:text-secondary-100">
                   {result.players.length}
                 </p>
               </div>
@@ -68,7 +70,7 @@ const GameDetailPage = () => {
                 <p className="w-1/2 text-xs font-bold leading-none tracking-widest uppercase text-secondary-500">
                   Loot Classes
                 </p>
-                <p className="w-1/2 font-bold leading-none">
+                <p className="w-1/2 font-bold leading-none text-secondary-900 dark:text-secondary-100">
                   {result.loot.length}
                 </p>
               </div>

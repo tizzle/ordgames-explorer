@@ -22,13 +22,13 @@ const NavigationLinkDisclosure = ({
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex items-center justify-between">
+          <Disclosure.Button className="flex items-center justify-between text-secondary-900 dark:text-secondary-100">
             <span>{label}</span>
             <div className="flex items-center justify-center w-10 h-10">
               {open ? (
-                <HiMinus className="w-5 h-5 text-primary-500" />
+                <HiMinus className="w-5 h-5 text-primary-500 dark:text-secondary-100" />
               ) : (
-                <HiPlus className="w-5 h-5 text-primary-500" />
+                <HiPlus className="w-5 h-5 text-primary-500 dark:text-secondary-100" />
               )}
             </div>
           </Disclosure.Button>
@@ -37,7 +37,7 @@ const NavigationLinkDisclosure = ({
               <Link
                 key={i.label}
                 to={i.target}
-                className="pl-6"
+                className="pl-6 text-secondary-900 dark:text-secondary-100"
                 onClick={closeOnClick}
               >
                 {i.label}

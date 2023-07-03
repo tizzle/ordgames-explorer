@@ -12,7 +12,7 @@ const Hero = () => {
           Ord Games is a standard for designing Bitcoin games and was inspired
           by Sats Names, BRC-20, Loot and other popular NFT games.
         </p>
-        <div className="flex items-center justify-center space-x-4">
+        <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:flex-row">
           <Link external={true} to="#games" variant="primary" size="lg">
             Explore the Games
           </Link>

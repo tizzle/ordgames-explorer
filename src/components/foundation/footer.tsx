@@ -11,7 +11,7 @@ const Footer = () => {
         </a>
         . No Rights Reserved.
       </span>
-      <ul className="flex flex-wrap items-center space-x-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+      <ul className="flex flex-wrap items-center space-x-6 text-sm">
         {navigationData.map((navLink) => (
           <NavigationLinkMenu
             key={navLink.label}
