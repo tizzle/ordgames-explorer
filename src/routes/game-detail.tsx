@@ -1,13 +1,29 @@
 import { Tab } from "@headlessui/react";
+import jju from "jju";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import TabButton from "../components/atoms/tab-button";
 import LootCard from "../components/cards/loot-card";
 import PlayerCard from "../components/cards/player-card";
 import gameData from "../data/game-data";
+import { emitPromise } from "../socket";
+import { Ordinal } from "../types/ordinals";
 
 export type PlayerItem = [string, number];
+export type PlayerItemObject = {
+  playerClass: string;
+  supply: number;
+  totalSupply?: number;
+};
+
 export type LootItem = [string, string, number, number];
+export type LootItemObject = {
+  lootClass: string;
+  lootObject: string;
+  power: number;
+  supply: number;
+  totalSupply?: number;
+};
 
 export type GamesDetailData = {
   args: string[];
@@ -20,41 +36,115 @@ export type GamesDetailData = {
   };
 };
 
-export type LootByCategory = {
-  [key: string]: LootItem[];
+export type GameBootData = {
+  p: "og";
+  v: string;
+  op: "boot";
+  name: string;
+  avatar: string;
+  players: [string, string][];
+  loot: [string, string, string, string][];
+};
+
+export type LootByCategoryWithSupply = {
+  [key: string]: LootItemObject[];
 };
 
 const GameDetailPage = () => {
   const { result, args } = useLoaderData() as GamesDetailData;
+  const [bootData, setBootData] = React.useState<GameBootData>();
 
-  const gameMetadata = gameData.find((g) => g.id === args[0]);
+  const gameMetaData = React.useMemo(
+    () => gameData.find((g) => g.id === args[0]),
+    [args]
+  );
 
-  // console.log("gameMetadata", gameMetadata);
+  React.useEffect(() => {
+    const loadBootData = async () => {
+      {
+        if (gameMetaData) {
+          const ordinalResponse = await emitPromise({
+            func: "ordinal",
+            args: [gameMetaData.id],
+            call_id: "",
+          });
 
-  const lootByCategory: LootByCategory = React.useMemo(() => {
-    return result.loot.reduce<LootByCategory>((acc, l) => {
-      if (!Array.isArray(acc[l[0]])) {
-        acc[l[0]] = [l];
-      } else {
-        acc[l[0]].push(l);
+          const ordinal = ordinalResponse.result as Ordinal;
+          const data = jju.parse(atob(ordinal.content));
+          setBootData(data);
+        }
       }
-      return acc;
-    }, {});
-  }, [result]);
+    };
+    loadBootData();
+  }, [gameMetaData]);
 
-  // console.log(lootByCategory);
+  const getBootLoot = React.useCallback(
+    (loot: LootItem) => {
+      if (bootData) {
+        return bootData.loot.find((l) => l[0] === loot[0] && l[1] === loot[1]);
+      }
+      return undefined;
+    },
+    [bootData]
+  );
+
+  const getBootPlayer = React.useCallback(
+    (player: PlayerItem) => {
+      if (bootData) {
+        return bootData.players.find((p) => p[0] === player[0]);
+      }
+      return undefined;
+    },
+    [bootData]
+  );
+
+  const lootByCategoryWithSupply: LootByCategoryWithSupply =
+    React.useMemo(() => {
+      return result.loot.reduce<LootByCategoryWithSupply>((acc, l) => {
+        const bootItem = getBootLoot(l);
+
+        const item = {
+          lootClass: l[0],
+          lootObject: l[1],
+          power: l[2],
+          supply: l[3],
+          totalSupply: bootItem ? parseInt(bootItem[3]) : undefined,
+        };
+
+        if (!Array.isArray(acc[l[0]])) {
+          acc[l[0]] = [item];
+        } else {
+          acc[l[0]].push(item);
+        }
+        return acc;
+      }, {});
+    }, [result, getBootLoot]);
+
+  const playersWithSupply: PlayerItemObject[] = React.useMemo(() => {
+    return result.players.map((p) => {
+      const bootItem = getBootPlayer(p);
+
+      const item: PlayerItemObject = {
+        playerClass: p[0],
+        supply: p[1],
+        totalSupply: bootItem ? parseInt(bootItem[1]) : undefined,
+      };
+
+      return item;
+    });
+  }, [result, getBootPlayer]);
 
   return (
     <main className="flex flex-col flex-grow py-8 space-y-16 container-7xl">
       <section>
-        {gameMetadata && (
+        {gameMetaData && (
           <div className="grid grid-cols-2 gap-12">
             <div className="col-span-2 sm:col-span-1">
-              <img src={gameMetadata?.image} className=" rounded-xl" />
+              <img src={gameMetaData?.image} className=" rounded-xl" />
             </div>
             <div className="flex flex-col justify-center w-full col-span-2 space-y-8 sm:col-span-1">
               <h1 className="text-4xl font-bold text-secondary-900 dark:text-secondary-100">
-                {gameMetadata.title}
+                {gameMetaData.title}
               </h1>
               <div className="space-y-4">
                 <div className="flex justify-center">
@@ -86,24 +176,30 @@ const GameDetailPage = () => {
             <TabButton title="Loot" />
           </Tab.List>
           <Tab.Panels className="p-6">
-            <Tab.Panel className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-              {result.players.map((p) => (
-                <PlayerCard key={p[0]} playerClass={p[0]} supply={p[1]} />
+            <Tab.Panel className="grid grid-cols-1 gap-4 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {playersWithSupply.map((p) => (
+                <PlayerCard
+                  key={p.playerClass}
+                  playerClass={p.playerClass}
+                  supply={p.supply}
+                  totalSupply={p.totalSupply}
+                />
               ))}
             </Tab.Panel>
-            <Tab.Panel className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-              {Object.keys(lootByCategory).map((lootKey) => (
+            <Tab.Panel className="grid grid-cols-1 gap-4 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {Object.keys(lootByCategoryWithSupply).map((lootKey) => (
                 <React.Fragment key={lootKey}>
-                  <div className="col-span-2 pt-4 font-medium tracking-widest text-center uppercase sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 text-secondary-500">
+                  <div className="col-span-1 pt-4 font-medium tracking-widest text-center uppercase xs:col-span-2 sm:col-span-3 lg:col-span-4 xl:col-span-5 text-secondary-500">
                     {lootKey}
                   </div>
-                  {lootByCategory[lootKey].map((l) => (
+                  {lootByCategoryWithSupply[lootKey].map((l) => (
                     <LootCard
-                      key={`${l[0]}-${l[1]}`}
-                      lootClass={l[0]}
-                      lootObject={l[1]}
-                      power={l[2]}
-                      supply={l[3]}
+                      key={`${l.lootClass}-${l.lootObject}`}
+                      lootClass={l.lootClass}
+                      lootObject={l.lootObject}
+                      power={l.power}
+                      supply={l.supply}
+                      totalSupply={l.totalSupply}
                     />
                   ))}
                 </React.Fragment>
