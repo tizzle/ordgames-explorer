@@ -1,5 +1,4 @@
 import { Tab } from "@headlessui/react";
-import jju from "jju";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import TabButton from "../components/atoms/tab-button";
@@ -8,6 +7,7 @@ import PlayerCard from "../components/cards/player-card";
 import gameData from "../data/game-data";
 import { emitPromise } from "../socket";
 import { Ordinal } from "../types/ordinals";
+import { parseJSON5 } from "../utils/json";
 
 export type PlayerItem = [string, number];
 export type PlayerItemObject = {
@@ -70,7 +70,7 @@ const GameDetailPage = () => {
           });
 
           const ordinal = ordinalResponse.result as Ordinal;
-          const data = jju.parse(atob(ordinal.content));
+          const data = parseJSON5(atob(ordinal.content));
           setBootData(data);
         }
       }

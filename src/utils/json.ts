@@ -1,11 +1,20 @@
-import jju from "jju";
+// import jju from "jju";
+import json5 from "json5";
 
-const isJSON = (str: string) => {
+const isValidJSON5 = (str: string) => {
   try {
-    return jju.parse(str) && !!str;
+    return json5.parse(str) && !!str;
   } catch (e) {
     return false;
   }
 };
 
-export { isJSON };
+const parseJSON5 = (str: string) => {
+  try {
+    return json5.parse(str);
+  } catch (e) {
+    return false;
+  }
+};
+
+export { isValidJSON5, parseJSON5 };

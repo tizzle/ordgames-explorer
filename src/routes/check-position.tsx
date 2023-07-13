@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import Button from "../components/atoms/button";
 import { emitPromise } from "../socket";
 import { Ordinal } from "../types/ordinals";
-import { isJSON } from "../utils/json";
+import { isValidJSON5 } from "../utils/json";
 
 export type CheckResult = {
   type: "success" | "badFormat";
@@ -63,7 +63,7 @@ const CheckPositionPage = () => {
         -8
       )}`;
 
-      if (isJSON(ordinalContent)) {
+      if (isValidJSON5(ordinalContent)) {
         // is a valid json5, fetch the position
 
         const data = await emitPromise({
@@ -84,7 +84,6 @@ const CheckPositionPage = () => {
         });
       } else {
         // is not a valid json5, break and show hint
-        console.log("is not a valid json");
         setCheckResult({
           type: "badFormat",
           message: (
