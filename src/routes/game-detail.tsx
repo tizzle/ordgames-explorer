@@ -81,7 +81,11 @@ const GameDetailPage = () => {
   const getBootLoot = React.useCallback(
     (loot: LootItem) => {
       if (bootData) {
-        return bootData.loot.find((l) => l[0] === loot[0] && l[1] === loot[1]);
+        return bootData.loot.find(
+          (l) =>
+            l[0].toLowerCase() === loot[0].toLowerCase() &&
+            l[1].toLowerCase() === loot[1].toLowerCase()
+        );
       }
       return undefined;
     },
@@ -91,7 +95,9 @@ const GameDetailPage = () => {
   const getBootPlayer = React.useCallback(
     (player: PlayerItem) => {
       if (bootData) {
-        return bootData.players.find((p) => p[0] === player[0]);
+        return bootData.players.find(
+          (p) => p[0].toLowerCase() === player[0].toLowerCase()
+        );
       }
       return undefined;
     },
@@ -102,7 +108,6 @@ const GameDetailPage = () => {
     React.useMemo(() => {
       return result.loot.reduce<LootByCategoryWithSupply>((acc, l) => {
         const bootItem = getBootLoot(l);
-
         const item = {
           lootClass: l[0],
           lootObject: l[1],
