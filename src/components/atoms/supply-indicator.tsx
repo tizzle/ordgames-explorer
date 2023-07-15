@@ -11,8 +11,6 @@ const SupplyIndicator = ({ supply, totalSupply }: SupplyIndicatorProps) => {
     return totalSupply !== undefined ? supply / totalSupply : undefined;
   }, [supply, totalSupply]);
 
-  console.log(percentageLeft);
-
   return (
     <span
       className={twMerge(
