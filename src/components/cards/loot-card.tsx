@@ -1,5 +1,6 @@
-import { twMerge } from "tailwind-merge";
 import { capitalizeFirstLetter } from "../../utils/string";
+import MintedIndicator from "../atoms/minted-indicator";
+import SupplyIndicator from "../atoms/supply-indicator";
 
 export interface LootCardProps {
   lootClass: string;
@@ -33,34 +34,13 @@ const LootCard = ({
         <span className="flex-grow block font-medium leading-none tracking-widest uppercase truncate text-2xs text-secondary-500">
           Supply
         </span>
-        <span
-          className={twMerge(
-            "block font-medium leading-none text-right text-xs",
-            supply === 0 && "text-red-500",
-            supply <= 100 && "text-orange-500",
-            supply >= 100 && "text-green-500"
-          )}
-        >
-          {supply}
-          {totalSupply && ` / ${totalSupply}`}
-        </span>
+        <SupplyIndicator supply={supply} totalSupply={totalSupply} />
       </p>
       <p className="flex items-end">
         <span className="flex-grow block font-medium leading-none tracking-widest uppercase truncate text-2xs text-secondary-500">
           Minted
         </span>
-        {totalSupply && (
-          <span
-            className={twMerge(
-              "block font-medium leading-none text-right text-xs",
-              supply === 0 && "text-red-500",
-              supply <= 100 && "text-orange-500",
-              supply >= 100 && "text-green-500"
-            )}
-          >
-            {Math.ceil(((totalSupply - supply) / totalSupply) * 100)} %
-          </span>
-        )}
+        <MintedIndicator supply={supply} totalSupply={totalSupply} />
       </p>
     </div>
   );
