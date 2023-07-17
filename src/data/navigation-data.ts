@@ -26,8 +26,8 @@ const navigationData: NavigationData = [
         target: "/tools/checkPlayer",
       },
       {
-        label: "Check Position",
-        target: "/tools/checkPosition",
+        label: "Check Loot",
+        target: "/tools/checkLoot",
       },
     ],
   },

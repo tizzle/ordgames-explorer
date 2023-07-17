@@ -1,6 +1,4 @@
 import React from "react";
-import { HiCheckCircle, HiXCircle } from "react-icons/hi2";
-import { twMerge } from "tailwind-merge";
 import Button from "../components/atoms/button";
 import { emit } from "../socket";
 import { useGlobalState } from "../state";
@@ -10,25 +8,18 @@ export type PlayerData = {
   isValid: boolean;
 };
 
-const CheckPlayerPage = () => {
-  const [ordGamesSocket] = useGlobalState("ordGamesSocket");
-  const [isOrdGamesSocketConnected] = useGlobalState(
-    "isOrdGamesSocketConnected"
-  );
-  const [validPlayers] = useGlobalState("validPlayers");
+const CheckWalletPage = () => {
+  const [tracSocket] = useGlobalState("tracSocket");
+  const [isTracSocketConnected] = useGlobalState("isTracSocketConnected");
 
   const [fieldValues, setFieldValues] = React.useState<{
     [key: string]: unknown;
   }>({});
 
-  const [playerId, setPlayerId] = React.useState<string>();
-  const shortPlayerId = React.useMemo(() => {
-    return playerId && `${playerId.slice(0, 8)}...${playerId.slice(-8)}`;
-  }, [playerId]);
+  const [walletData, setWalletData] = React.useState<PlayerData>();
 
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPlayerId(undefined);
       setFieldValues({
         ...fieldValues,
         [event.target.name]: event.target.value,
@@ -41,8 +32,8 @@ const CheckPlayerPage = () => {
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (event.target.value === "" || !event.target.value) {
         switch (event.target.name) {
-          case "inscription-id":
-            event.target.setCustomValidity("Please enter an inscription id.");
+          case "wallet-address":
+            event.target.setCustomValidity("Please enter a wallet-address.");
             break;
         }
       } else {
@@ -55,17 +46,24 @@ const CheckPlayerPage = () => {
   const handleSubmit = React.useCallback(
     async (event: React.FormEvent) => {
       event.preventDefault();
-      if (ordGamesSocket && isOrdGamesSocketConnected) {
+
+      if (tracSocket && isTracSocketConnected) {
         emit({
-          socket: ordGamesSocket,
-          func: "isValidPlayer",
-          args: [fieldValues["inscription-id"] as string],
+          socket: tracSocket,
+          func: "wallet",
+          args: [(fieldValues["wallet-address"] as string).trim()],
           call_id: "",
         });
-        setPlayerId(fieldValues["inscription-id"] as string);
+
+        // console.log("trac data", data);
+
+        // setWalletData({
+        //   inscriptionId: fieldValues["wallet-address"] as string,
+        //   isValid: data.result as boolean,
+        // });
       }
     },
-    [fieldValues, ordGamesSocket, isOrdGamesSocketConnected]
+    [fieldValues, tracSocket, isTracSocketConnected]
   );
 
   return (
@@ -73,11 +71,11 @@ const CheckPlayerPage = () => {
       <section>
         <div className="space-y-4">
           <h1 className="text-4xl font-bold text-secondary-900 dark:text-secondary-100">
-            Check Player
+            Check Wallet
           </h1>
           <p className="text-secondary-500 dark:text-secondary-500">
-            Check if a player is valid by searching for it with it's inscription
-            id.
+            Check a wallets' Ord Games holdings by searching for a wallet
+            address.
           </p>
         </div>
       </section>
@@ -85,10 +83,10 @@ const CheckPlayerPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex space-x-2">
             <input
-              id="inscription-id"
-              name="inscription-id"
+              id="wallet-address"
+              name="wallet-address"
               type="text"
-              placeholder="Inscription Id"
+              placeholder="Wallet Address"
               required={true}
               className="flex-grow rounded"
               onBlur={handleInputBlur}
@@ -104,36 +102,36 @@ const CheckPlayerPage = () => {
           </div>
         </form>
       </section>
-      {playerId && validPlayers[playerId] && (
+      {walletData && (
         <section>
-          <div
+          Wallet
+          {JSON.stringify(walletData, null, 4)}
+          {/* <div
             className={twMerge(
               "flex flex-row items-center p-6 space-x-2 bg-secondary-100 dark:bg-secondary-800 rounded-xl",
-              validPlayers[playerId] && "text-green-500",
-              !validPlayers[playerId] && "text-red-500"
+              playerData.isValid && "text-green-500",
+              !playerData.isValid && "text-red-500"
             )}
           >
-            {validPlayers[playerId] ? (
-              <HiCheckCircle className="flex-shrink-0 w-8 h-8" />
+            {playerData.isValid ? (
+              <HiCheckCircle className="w-8 h-8" />
             ) : (
-              <HiXCircle className="flex-shrink-0 w-8 h-8" />
+              <HiXCircle className="w-8 h-8" />
             )}
-            <p className="truncate-">
+            <p>
               {"The player with the inscription id "}
-              <b className="truncate">{shortPlayerId}</b>
+              <b>{playerData.inscriptionId}</b>
               {" is "}
-              {validPlayers[playerId]
-                ? "a valid player."
-                : "not a valid player."}
+              {playerData.isValid ? "a valid player." : "not a valid player."}
             </p>
-          </div>
+          </div> */}
         </section>
       )}
     </main>
   );
 };
 
-export default CheckPlayerPage;
+export default CheckWalletPage;
 
 /*
 import { io } from 'socket.io-client';

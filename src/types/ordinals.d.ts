@@ -9,3 +9,5 @@ export type Ordinal = {
   offset: string;
   timestamp: string;
 };
+
+export type Wallet = Ordinal[];

@@ -1,34 +1,35 @@
 import { io } from "socket.io-client";
+import { EmitPromiseProps, EmitProps, EmitResponse } from "../types/socket";
 
-const socket = io("https://ordgames.trac.network", {
-  autoConnect: true,
-  reconnection: true,
-  reconnectionDelay: 500,
-  reconnectionDelayMax: 500,
-  randomizationFactor: 0,
-});
+const connectOrdGamesSocket = () => {
+  return io("https://ordgames.trac.network", {
+    autoConnect: true,
+    reconnection: true,
+    reconnectionDelay: 500,
+    reconnectionDelayMax: 500,
+    randomizationFactor: 0,
+  });
+};
 
-export interface EmitPromiseProps {
-  func: string;
-  args: string[];
-  call_id: string;
-}
-
-export interface EmitResponse {
-  args: string[];
-  call_id: string;
-  error: string;
-  func: string;
-  result: unknown;
-}
+const connectTracSocket = () => {
+  return io("https://api.trac.network", {
+    autoConnect: true,
+    reconnection: true,
+    reconnectionDelay: 500,
+    reconnectionDelayMax: 500,
+    randomizationFactor: 0,
+  });
+};
 
 const emitPromise = ({
+  socket,
   func,
   args,
   call_id,
 }: EmitPromiseProps): Promise<EmitResponse> => {
   return new Promise((resolve, reject) => {
     const handleTracResponse = (response: EmitResponse) => {
+      console.log("handling trac response", response);
       if (response.error === "") {
         resolve(response);
       } else {
@@ -36,6 +37,8 @@ const emitPromise = ({
       }
       socket.off("response", handleTracResponse);
     };
+
+    console.log("emit trac promise", func, args, call_id);
 
     socket.on("response", handleTracResponse);
 
@@ -47,4 +50,12 @@ const emitPromise = ({
   });
 };
 
-export { emitPromise, socket };
+const emit = ({ socket, func, args, call_id }: EmitProps) => {
+  socket.emit("get", {
+    func,
+    args,
+    call_id,
+  });
+};
+
+export { connectOrdGamesSocket, connectTracSocket, emit, emitPromise };
