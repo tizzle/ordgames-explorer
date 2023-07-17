@@ -206,7 +206,8 @@ const CheckPositionPage = () => {
             Check Loot
           </h1>
           <p className="text-secondary-500 dark:text-secondary-500">
-            Check the position of your loot to see if it within the max-supply.
+            Check the position of your loot to see if it is within the
+            max-supply.
           </p>
           <p className="text-xs text-secondary-500 dark:text-secondary-500">
             Example: You minted a power 10 loot for the Wizords game and you
