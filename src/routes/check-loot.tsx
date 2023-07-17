@@ -32,9 +32,9 @@ const CheckPositionPage = () => {
   }, [lootId]);
 
   const [gameId, setGameId] = React.useState<string>();
-  const shortGameId = React.useMemo(() => {
-    return gameId && `${gameId.slice(0, 8)}...${gameId.slice(-8)}`;
-  }, [gameId]);
+  // const shortGameId = React.useMemo(() => {
+  //   return gameId && `${gameId.slice(0, 8)}...${gameId.slice(-8)}`;
+  // }, [gameId]);
 
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -16,7 +16,7 @@ const CheckWalletPage = () => {
     [key: string]: unknown;
   }>({});
 
-  const [walletData, setWalletData] = React.useState<PlayerData>();
+  const [walletData, _setWalletData] = React.useState<PlayerData>();
 
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,12 +47,14 @@ const CheckWalletPage = () => {
     async (event: React.FormEvent) => {
       event.preventDefault();
 
+      console.log("submit check wallet");
+
       if (tracSocket && isTracSocketConnected) {
         emit({
           socket: tracSocket,
           func: "wallet",
           args: [(fieldValues["wallet-address"] as string).trim()],
-          call_id: "",
+          call_id: "fart",
         });
 
         // console.log("trac data", data);

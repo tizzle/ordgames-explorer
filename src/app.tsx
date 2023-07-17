@@ -47,7 +47,7 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const [_tracSocket, setTracSocket] = useGlobalState("tracSocket");
+  const [tracSocket, setTracSocket] = useGlobalState("tracSocket");
   const [_itsc, setIsTracSocketConnected] = useGlobalState(
     "isTracSocketConnected"
   );
@@ -175,6 +175,18 @@ const App = () => {
     setLootDetails,
     setInscribedPositions,
   ]);
+
+  React.useEffect(() => {
+    if (tracSocket) {
+      tracSocket.on("response", (msg: EmitResponse) => {
+        switch (msg.func) {
+          case "wallet":
+            console.log("wallet", msg);
+            break;
+        }
+      });
+    }
+  }, [tracSocket]);
 
   return (
     <div>
